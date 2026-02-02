@@ -1,6 +1,6 @@
 Outputs first order properties of 180deg and Z Fold Convex and Concave OAP beam expanders. Download example zemax file for the LDE setup. Or directly use the swing radius calculations in Nanocam/Diffsys to set up the domains of the asphere geometry.
 
-Example output:
+Example output: 
 {'DT_Swing_Radius_m1_edge': 122.6234072271685,
  'DT_Swing_Radius_m1_inside': 64.5,
  'DT_Swing_Radius_m1_outside': 119.5,
