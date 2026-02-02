@@ -38,6 +38,10 @@ def calculate_oap_zemax_params(d_in, magnification, f1_parent):
     real_y_shift_m2 = (y_top_ray + y_bot_ray) / 2
     # 3. Anamorphic Stretch Factor
     y_stretch_factor = real_y_width_m2 / (d_in * magnification)
+    Anamorphic_stretch_Ratio = f"{round(((y_stretch_factor - 1) * 100) , 4)}%"
+
+    x_compression_factor = 1 / y_stretch_factor
+    x_min_half_width_m2 = (d_in * magnification / 2) * x_compression_factor
     #################################################
 
 
@@ -48,7 +52,6 @@ def calculate_oap_zemax_params(d_in, magnification, f1_parent):
     #M1
     x_half_width = (d_in / 2)
     y_half_width = x_half_width
-    max_half_width = abs(r1) / 2
     m1_LDE_Decenter_Y = abs(r1) * (1 + ((magnification - 1) * 0.5))
     #################################################
 
@@ -59,7 +62,6 @@ def calculate_oap_zemax_params(d_in, magnification, f1_parent):
     # For the second mirror, the beam is stretched and shifted
     x_half_width_m2 = (d_in * magnification / 2) * y_stretch_factor
     y_half_width_m2 = x_half_width_m2
-    max_half_width_m2 = abs(r2) / 2
     m2_LDE_Decenter_Y = (abs(r2) * -1) - real_y_shift_m2
     Aperture_Decenter_Y_m2 = (abs(r2) * -1) - real_y_shift_m2
     #################################################
@@ -86,7 +88,6 @@ def calculate_oap_zemax_params(d_in, magnification, f1_parent):
             "Aperture_Decenter_Y": oad1,
             "X_Half_Width": x_half_width,
             "Y_Half_Width": y_half_width,
-            "Max_Half_Width": max_half_width,
             "m2_LDE_Decenter_Y": m1_LDE_Decenter_Y,
 
         },
@@ -94,15 +95,14 @@ def calculate_oap_zemax_params(d_in, magnification, f1_parent):
         "M2": {
             "ROC": r2, # Positive for concave
             "Conic": -1,
-            "CB_Decenter_Y": oad2 - oad1, # Relative shift
             "Aperture_Decenter_Y": Aperture_Decenter_Y_m2,
             "X_Half_Width": x_half_width_m2,
             "Y_Half_Width": y_half_width_m2,
-            "Max_Half_Width": max_half_width_m2,
-            "image_LDE_Decenter_y": m2_LDE_Decenter_Y
+            "image_LDE_Decenter_y": m2_LDE_Decenter_Y,
+            "X_Min_Half_Width":x_min_half_width_m2,
+            "Anamorphic_stretch_Ratio":Anamorphic_stretch_Ratio
 
         },
-        "Final_Exit_Decenter": oad2,
         "Diamond_Turning_Swing_Radius_at_center":DT_Swing_Radius,
         "Diamond_Turning_Swing_Radius_at_edge":DT_Swing_Radius_edge,
 
