@@ -42,8 +42,7 @@ def calculate_oap_zemax_params(d_in, magnification, f1_parent):
 
     x_compression_factor = 1 / y_stretch_factor
     x_min_half_width_m2 = (d_in * magnification / 2) * x_compression_factor
-
-    System_Anamorphic_Ratio = y_stretch_factor / x_compression_factor
+    System_Anamorphic_Ratio = ((y_stretch_factor - 1) * 2) + 1
     #################################################
 
 
@@ -119,7 +118,7 @@ def calculate_oap_zemax_params(d_in, magnification, f1_parent):
 
 # --- Example Run (Using your EO numbers) ---
 # EO has R1=50.8, so f1=25.4. Magnification = 2.
-params = calculate_oap_zemax_params(d_in=55, magnification=2.25, f1_parent=46)
+params = calculate_oap_zemax_params(d_in=50, magnification=2.25, f1_parent=46)
 
 
 
